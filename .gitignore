@@ -1,11 +1,7 @@
 .idea/
-
 target/
-
 *.iml
-
 *.bak
-
 tomcat/
-
 rebel.xml
+src/test/
