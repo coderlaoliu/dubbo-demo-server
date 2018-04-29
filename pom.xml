@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.wolfcode</groupId>
+    <artifactId>dubbo-demo-server</artifactId>
+    <version>1.0.0</version>
+
+    <!-- SpringBoot 依赖 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+    </parent>
+
+    <properties>
+        <!-- 使用 jdk 1.8 -->
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- 日志依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+
+        <!-- dubbo2springboot 桥接包 -->
+        <dependency>
+            <groupId>com.gitee.reger</groupId>
+            <artifactId>spring-boot-starter-dubbo</artifactId>
+            <version>1.0.10</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 指定启动 jar 的 mainfest -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!--运行jar包时运行的主类，要求类全名-->
+                            <!--<mainClass>com.alibaba.dubbo.container.Main</mainClass>-->
+                            <mainClass>cn.wolfcode.dubbo.main.DubboDemoServer</mainClass>
+                            <!-- 是否指定项目classpath下的依赖 -->
+                            <addClasspath>true</addClasspath>
+                            <!-- 指定依赖的时候声明前缀 -->
+                            <classpathPrefix>./</classpathPrefix>
+                        </manifest>
+                    </archive>
+                    <!-- 排除 jar 包中的配置文件 -->
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.xml</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- pom 中定义 assembly -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <!-- assembly 分包配置文件 -->
+                    <descriptor>src/main/assembly/assembly.xml</descriptor>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <!-- 打包只执行一次 -->
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- 启用编译插件 -->
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- 开发环境配置 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <active.profile>dev</active.profile>
+                <application.name>dubbo-demo-server-dev</application.name>
+                <registry.address>N/A</registry.address>
+                <protocol.name>dubbo</protocol.name>
+                <protocol.port>20880</protocol.port>
+                <scan.basepackage>cn.wolfcode.dubbo.service</scan.basepackage>
+            </properties>
+            <activation>
+                <!-- 默认使用开发环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 测试环境配置 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <active.profile>test</active.profile>
+                <application.name>dubbo-demo-server-test</application.name>
+                <registry.address>N/A</registry.address>
+                <protocol.name>dubbo</protocol.name>
+                <protocol.port>20880</protocol.port>
+                <scan.basepackage>cn.wolfcode.dubbo.service</scan.basepackage>
+            </properties>
+        </profile>
+        <!-- 生产环境配置 -->
+        <profile>
+            <id>prd</id>
+            <properties>
+                <active.profile>prd</active.profile>
+                <application.name>dubbo-demo-server</application.name>
+                <registry.address>zookeeper://192.168.56.101:2181</registry.address>
+                <protocol.name>dubbo</protocol.name>
+                <protocol.port>20880</protocol.port>
+                <scan.basepackage>cn.wolfcode.dubbo.service</scan.basepackage>
+            </properties>
+        </profile>
+    </profiles>
+</project>

@@ -1,0 +1,38 @@
+<assembly>
+    <id>prd</id>
+    <formats>
+        <!-- zip,tar,tar.gz,tar.bz2,jar,dir,war -->
+        <format>tar.gz</format>
+    </formats>
+    <!--tar.gz 压缩包下是否生成和项目名相同的根目录-->
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <dependencySets>
+        <!-- 依赖包的输出路径 -->
+        <dependencySet>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>/lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+    <!-- 需要打包的资源文件 -->
+    <fileSets>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>/conf</outputDirectory>
+            <includes>
+                <include>**/*.xml</include>
+                <include>**/*.properties</include>
+            </includes>
+            <!-- 是否进行文件置换(将 maven profile 中的 properties 与配置文件引用置换) -->
+            <filtered>true</filtered>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/assembly/bin</directory>
+            <outputDirectory>/bin</outputDirectory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <!-- 分配可执行权限 -->
+            <fileMode>0755</fileMode>
+        </fileSet>
+    </fileSets>
+</assembly>
