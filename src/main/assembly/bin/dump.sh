@@ -1,9 +1,13 @@
-#!/bin/bash
+#!/bin/sh
 cd `dirname $0`
 BIN_DIR=`pwd`
 cd ..
+# 项目目录
 DEPLOY_DIR=`pwd`
+# 配置文件目录
 CONF_DIR=$DEPLOY_DIR/conf
+# 服务相关配置文件
+CONFIG_FILE=conf/application.properties
 
 # 如果JDK环境变量没有写到全局要添加如下几行
 # JAVA_HOME=/opt/java/jdk1.6.0_45
@@ -12,7 +16,7 @@ CONF_DIR=$DEPLOY_DIR/conf
 # export PATH
 
 # 获取服务名称
-SERVER_NAME=`sed '/dubbo.application.name/!d;s/.*=//' conf/application.properties | tr -d '\r'`
+SERVER_NAME=`sed '/dubbo.application.name/!d;s/.*=//' $CONFIG_FILE | tr -d '\r'`
 
 if [ -z "$SERVER_NAME" ]; then
     SERVER_NAME=`hostname`

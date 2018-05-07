@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 cd `dirname $0`
 
 # 当前路径
@@ -106,10 +106,10 @@ fi
 echo -e "Starting the $SERVER_NAME ...\c"
 echo "启动参数：java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS $MAIN_CLASS" >> $STDOUT_FILE
 
-# 通过java命令启动服务，同时将其作为后台任务执行。
+# 通过java命令启动服务，同时将其作为后台任务执行。（使用 Docker 启动时注释下面相关内容）
+# ================================== Java App ==================================
 nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS $MAIN_CLASS > $STDOUT_FILE 2>&1 &
-
-# 睡眠一下再检查应用是否启动
+睡眠一下再检查应用是否启动
 sleep 1
 APP_PID=`ps -f | grep java | grep "$CONF_DIR" |awk '{print $2}'`
 
@@ -120,4 +120,10 @@ if [ -z "$APP_PID" ]; then
 fi
 
 echo "START SUCCESSED APP_PID: $APP_PID"
-echo "STDOUT: $STDOUT_FILE"
+echo "STDOUT: $STDOUT_FILE \r\n"
+# ==================================== End =====================================
+
+# 使用 Docker 运行时启用该命令，并注释上面的脚本
+# ============================== Docker Container ==============================
+#java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS $MAIN_CLASS > $STDOUT_FILE 2>&1
+# ==================================== End =====================================
