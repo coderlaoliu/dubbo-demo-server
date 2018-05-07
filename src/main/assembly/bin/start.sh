@@ -120,7 +120,7 @@ if [ -z "$APP_PID" ]; then
 fi
 
 echo "START SUCCESSED APP_PID: $APP_PID"
-echo "STDOUT: $STDOUT_FILE \r\n"
+echo "STDOUT: $STDOUT_FILE"
 # ==================================== End =====================================
 
 # 使用 Docker 运行时启用该命令，并注释上面的脚本

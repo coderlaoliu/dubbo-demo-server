@@ -15,6 +15,6 @@
 **注意事项**  
 你可以使用很简单的方式将本项目修改为你自身的项目，但需要注意修改以下几个地方：
 
-1. start.sh 脚本文件中的 MAIN_CLASS 和 CONFIG_FILE（stop.sh 文件同样也需要修改）  
+1. start.sh 脚本文件中的 MAIN_CLASS 和 CONFIG_FILE（stop.sh 和 dunp.sh 文件同样也需要修改）
 2. logback-spring.xml 文件中的 PROJECT_NAME 与包名  
 3. pom.xml 文件中的相关环境配置文件  
