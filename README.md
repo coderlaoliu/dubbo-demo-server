@@ -1,5 +1,5 @@
 ### Dubbo 服务部署演示项目
-关于项目中的一些插件与脚本介绍，可以看这篇文章 [Dubbo 服务部署解决方案：基于 Assembly 拆包部署](https://hooox.io)
+关于项目中的一些插件与脚本介绍，可以看这篇文章 [Dubbo 服务部署解决方案：基于 Assembly 拆包部署](https://www.jianshu.com/p/f0939d91f06f)
 
 **部署流程**  
 1. 使用 `mvn package -Pdev` 进行打包（选择你自己的环境）
